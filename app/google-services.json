@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "108758856117",
+    "project_id": "unizen-app",
+    "storage_bucket": "unizen-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108758856117:android:32c112d795e54fa9c069fc",
+        "android_client_info": {
+          "package_name": "com.unizen.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108758856117-j84a0vvi42ao1surb72soebq7lkiqr4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgfWAukkyNsnHrZY25NBKbyYX0mG3D8RA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108758856117-j84a0vvi42ao1surb72soebq7lkiqr4c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
