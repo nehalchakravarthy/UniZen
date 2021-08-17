@@ -33,6 +33,11 @@ import com.google.firebase.storage.UploadTask;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    /**********************************************
+     * Handles registering of users in the app
+     * User can navigate to login screen from here
+     **********************************************/
+
     ImageView regProfilePicture;
     static int PReqCode = 1;
     static int REQUESTCODE = 1;
@@ -65,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
         regProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Handle adding profile picture on clicking image
                 if (Build.VERSION.SDK_INT >= 22) {
                     checkAndRequestPermission();
                 } else {
@@ -76,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
         textLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Navigate to login activity using intent
                 Intent loginActivity = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(loginActivity);
                 finish();
@@ -85,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Handle registration of new user
                 regBtn.setVisibility(View.INVISIBLE);
                 loadingProgress.setVisibility(View.VISIBLE);
                 final String name = regName.getText().toString();
@@ -105,12 +113,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void openGallery() {
+        // Method to open gallery and return selected image using intent
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, REQUESTCODE);
     }
 
     private void checkAndRequestPermission() {
+        // Method to check and request for permission to read from external storage. Opens gallery to select image if permission granted
         if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -125,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // Handles the result from intent to pick profile picture
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUESTCODE && data != null) {
             pickedImgUri = data.getData();
@@ -133,9 +144,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void CreateUserAccount(String email, final String name, String password) {
+        // Method to create new user account using Firebase Authentication
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                // Perform tasks after user account creation is attempted
                 if (task.isSuccessful()) {
                     showToast("Account created successfully");
                     updateUserInfo(name, pickedImgUri, mAuth.getCurrentUser());
@@ -150,6 +163,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void updateUserInfo(final String name, Uri pickedImgUri, final FirebaseUser currentUser) {
+        // Update user information in Firebase Storage
         StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("users_photos");
         final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
         imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -167,6 +181,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        // Show toast message and navigate to home screen after successful updating of user profile information
                                         if (task.isSuccessful()) {
                                             showToast("Registration complete");
                                             updateUI();
@@ -180,12 +195,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
+        // Method to navigate to home activity using intent
         Intent homeActivity = new Intent(RegisterActivity.this, HomeActivity.class);
         startActivity(homeActivity);
         finish();
     }
 
     private void showToast(String message) {
+        // Method to create and show a toast message
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 }

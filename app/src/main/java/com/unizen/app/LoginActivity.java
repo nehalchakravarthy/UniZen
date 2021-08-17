@@ -23,8 +23,14 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
+    /*************************************************
+     * Handles logging in of users in the app
+     * User can navigate to register screen from here
+     *************************************************/
+
     @Override
     protected void attachBaseContext(Context base) {
+        // Enable multidex
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
@@ -51,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Handle login button click event
                 loginProgress.setVisibility(View.VISIBLE);
                 btnLogin.setVisibility(View.INVISIBLE);
 
@@ -72,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         textRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Navigate to register activity using intent
                 Intent registerActivity = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(registerActivity);
                 finish();
@@ -79,10 +87,22 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        // Check if user is logged in, if yes, redirect to home activity
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null) {
+            updateUI();
+        }
+    }
+
     private void signIn(String mail, String password) {
+        // Handle user sign in through Firebase
         mAuth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                // Perform tasks after sign in is attempted
                 if (task.isSuccessful()) {
                     loginProgress.setVisibility(View.INVISIBLE);
                     btnLogin.setVisibility(View.VISIBLE);
@@ -98,21 +118,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
+        // Method to navigate to home activity using intent
         Intent HomeActivity = new Intent(getApplicationContext(), com.unizen.app.HomeActivity.class);
         startActivity(HomeActivity);
         finish();
     }
 
     private void showToast(String message) {
+        // Method to create and show a toast message
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null) {
-            updateUI();
-        }
-    }
 }
