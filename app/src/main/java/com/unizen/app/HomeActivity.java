@@ -148,7 +148,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                             popupDescription.getText().toString(),
                                             imageDownloadLink,
                                             currentUser.getUid(),
-                                            currentUser.getPhotoUrl().toString());
+                                            currentUser.getPhotoUrl().toString(),
+                                            currentUser.getDisplayName().toString());
                                     // Add post to firebase database
                                     addPost(post);
                                 }

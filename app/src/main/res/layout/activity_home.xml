@@ -7,15 +7,19 @@
     tools:context=".HomeActivity"
     android:id="@+id/drawer">
 
+<!--    <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/drawer_toolbar"/>
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/content_main"/>
+<!--    <include-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        layout="@layout/content_main"/>-->
+<!--    </androidx.appcompat.widget.LinearLayoutCompat>-->
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="300dp"
