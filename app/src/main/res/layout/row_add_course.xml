@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="14dp" >
+
+    <EditText
+        android:id="@+id/edit_course_name"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="7dp"
+        android:background="@drawable/round_grey"
+        android:layout_weight="1"
+        android:hint="Course Name"
+        android:textSize="14sp"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <EditText
+        android:id="@+id/edit_course_credit"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="14dp"
+        android:background="@drawable/round_grey"
+        android:inputType="number"
+        android:hint="Credits"
+        android:textSize="14sp"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
+        android:layout_width="80dp"
+        android:layout_height="40dp" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_grey">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_grade"
+            android:layout_width="80dp"
+            android:layout_height="40dp" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/image_remove"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_close"
+        app:tint="@color/black" />
+
+</LinearLayout>

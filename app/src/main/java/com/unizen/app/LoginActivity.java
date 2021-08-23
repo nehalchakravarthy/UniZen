@@ -23,10 +23,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    /*************************************************
+    /**
      * Handles logging in of users in the app
      * User can navigate to register screen from here
-     *************************************************/
+     **/
 
     @Override
     protected void attachBaseContext(Context base) {

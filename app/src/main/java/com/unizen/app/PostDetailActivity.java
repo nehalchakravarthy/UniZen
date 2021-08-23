@@ -2,11 +2,8 @@ package com.unizen.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.VoiceInteractor;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +18,10 @@ import java.util.Locale;
 
 public class PostDetailActivity extends AppCompatActivity {
 
+    /**
+     * Displays detailed information of a selected post
+     **/
+
     ImageView imgPost, imgUserPost;
     TextView txtPostDesc, txtPostDateName, txtPostTitle;
     String PostKey;
@@ -32,10 +33,6 @@ public class PostDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
-
-        Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getSupportActionBar().hide();
 
         imgPost = findViewById(R.id.post_detail_img);
         imgUserPost = findViewById(R.id.post_detail_user_img);
@@ -63,10 +60,14 @@ public class PostDetailActivity extends AppCompatActivity {
         txtPostDateName.setText(date + " | by " + userName);
 
         String userPhoto = getIntent().getExtras().getString("userPhoto") ;
-        Glide.with(this).load(userPhoto).apply(RequestOptions.circleCropTransform()).into(imgUserPost);
+        if(userPhoto != null)
+            Glide.with(this).load(userPhoto).apply(RequestOptions.circleCropTransform()).into(imgUserPost);
+        else
+            Glide.with(this).load(R.drawable.no_pic).apply(RequestOptions.circleCropTransform()).into(imgUserPost);
     }
 
     private String timestampToString(long time) {
+        // Convert timestamp to string format
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
         calendar.setTimeInMillis(time);
         String date = DateFormat.format("dd-MM-yyyy",   calendar).toString();

@@ -27,16 +27,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+
 public class RegisterActivity extends AppCompatActivity {
 
-    /**********************************************
+    /**
      * Handles registering of users in the app
      * User can navigate to login screen from here
-     **********************************************/
+     **/
 
     ImageView regProfilePicture;
     static int PReqCode = 1;
@@ -49,6 +53,8 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView textLogin;
 
     private FirebaseAuth mAuth;
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
         loadingProgress.setVisibility(View.INVISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
+        databaseReference = firebaseDatabase.getReference("Users");
 
         regProfilePicture = findViewById(R.id.regProfilePicture);
         regProfilePicture.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +158,12 @@ public class RegisterActivity extends AppCompatActivity {
                 // Perform tasks after user account creation is attempted
                 if (task.isSuccessful()) {
                     showToast("Account created successfully");
-                    updateUserInfo(name, pickedImgUri, mAuth.getCurrentUser());
+                    if(pickedImgUri != null)
+                        updateUserInfo(name, pickedImgUri, mAuth.getCurrentUser());
+                    else
+                        updateUserInfoWithoutPhoto(name, mAuth.getCurrentUser());
+                    User user = new User(mAuth.getCurrentUser().getUid());
+                    databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user);
                 }
                 else {
                     showToast("Account creation failed" + task.getException().getMessage());
@@ -192,6 +204,26 @@ public class RegisterActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void updateUserInfoWithoutPhoto(final String name, final FirebaseUser currentUser) {
+        // Update user information in Firebase Storage when image is not picked
+        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build();
+
+        currentUser.updateProfile(profileUpdate)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // Show toast message and navigate to home screen after successful updating of user profile information
+                        if (task.isSuccessful()) {
+                            showToast("Registration complete");
+                            updateUI();
+                        }
+                    }
+                });
+
     }
 
     private void updateUI() {

@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,15 +42,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    /************************************************************************************
-     *  Represents the home screen after user logs in. Displays all the available posts.
-     *  User can navigate to other screens using the Navigation Drawer.
-     ************************************************************************************/
+    /**
+     * Represents the home screen after user logs in. Displays all the available posts.
+     * User can navigate to other screens using the Navigation Drawer.
+     **/
 
-    private static final int PReqCode = 2 ;
-    private static final int REQUESTCODE = 2 ;
+    private static final int PReqCode = 2;
+    private static final int REQUESTCODE = 2;
 
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -68,6 +69,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TextView popupTitle, popupDescription;
     ProgressBar popupClickProgress;
     private Uri pickedImgUri = null;
+
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,19 +100,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         initPopup();
         setupPopupImageClick();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popAddPost.show();
             }
         });
-
         updateNavHeader();
     }
 
     private void initPopup() {
-
+        // Initialise popup to create post on clicking floating action button
         popAddPost = new Dialog(this);
         popAddPost.setContentView(R.layout.add_post_popup);
         popAddPost.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -124,7 +126,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         popupClickProgress = popAddPost.findViewById(R.id.popup_progressBar);
 
         // Load current user's profile photo
-        Glide.with(HomeActivity.this).load(currentUser.getPhotoUrl()).apply(RequestOptions.circleCropTransform()).into(popupUserImage);
+        if(currentUser.getPhotoUrl() != null)
+            Glide.with(HomeActivity.this).load(currentUser.getPhotoUrl()).apply(RequestOptions.circleCropTransform()).into(popupUserImage);
+        else
+            Glide.with(HomeActivity.this).load(R.drawable.no_pic).apply(RequestOptions.circleCropTransform()).into(popupUserImage);
 
         // Add post button click listener
         popupAddBtn.setOnClickListener(new View.OnClickListener() {
@@ -143,15 +148,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String imageDownloadLink = uri.toString();
+                                    ArrayList<String> bookmarkedUsers = new ArrayList<String>();
+                                    bookmarkedUsers.add(currentUser.getUid());
                                     // Create Post object
-                                    Post post = new Post(popupTitle.getText().toString(),
-                                            popupDescription.getText().toString(),
-                                            imageDownloadLink,
-                                            currentUser.getUid(),
-                                            currentUser.getPhotoUrl().toString(),
-                                            currentUser.getDisplayName().toString());
-                                    // Add post to firebase database
-                                    addPost(post);
+                                    if(currentUser.getPhotoUrl() != null) {
+                                        Post post = new Post(popupTitle.getText().toString(),
+                                                popupDescription.getText().toString(),
+                                                imageDownloadLink,
+                                                currentUser.getUid(),
+                                                currentUser.getPhotoUrl().toString(),
+                                                currentUser.getDisplayName().toString());
+                                        // Add post to firebase database
+                                        addPost(post);
+                                    }
+                                    else {
+                                        Post post = new Post(popupTitle.getText().toString(),
+                                                popupDescription.getText().toString(),
+                                                imageDownloadLink,
+                                                currentUser.getUid(),
+                                                null,
+                                                currentUser.getDisplayName().toString());
+                                        // Add post to firebase database
+                                        addPost(post);
+                                    }
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -174,7 +193,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void addPost(Post post) {
-
+        // Add new post to database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Posts").push();
 
@@ -195,6 +214,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setupPopupImageClick() {
+        // Handle image picker for post popup
         popupPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -255,7 +275,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         navName.setText(currentUser.getDisplayName());
         navMail.setText(currentUser.getEmail());
-        Glide.with(this).load(currentUser.getPhotoUrl()).apply(RequestOptions.circleCropTransform()).into(navPhoto);
+
+        if(currentUser.getPhotoUrl() != null)
+            Glide.with(this).load(currentUser.getPhotoUrl()).apply(RequestOptions.circleCropTransform()).into(navPhoto);
+        else
+            Glide.with(this).load(R.drawable.no_pic).apply(RequestOptions.circleCropTransform()).into(navPhoto);
     }
 
     @Override
@@ -264,39 +288,36 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         existing fragment displayed with the help of Fragment Manager. The toolbar title is updated accordingly */
         drawerLayout.closeDrawer(GravityCompat.START);
         if(item.getItemId() == R.id.home) {
+            fab.show();
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_fragment, new HomeFragment());
             fragmentTransaction.commit();
             toolbar.setTitle("Home");
         }
-        if(item.getItemId() == R.id.profile) {
+        if(item.getItemId() == R.id.bookmarks) {
+            fab.hide();
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new ProfileFragment());
+            fragmentTransaction.replace(R.id.container_fragment, new BookmarksFragment());
             fragmentTransaction.commit();
-            toolbar.setTitle("Profile");
+            toolbar.setTitle("Bookmarks");
         }
-        if(item.getItemId() == R.id.timetable) {
+        if(item.getItemId() == R.id.grade_calculaor) {
+            fab.hide();
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new TimetableFragment());
-            fragmentTransaction.commit();
-            toolbar.setTitle("Timetable");
-        }
-        if(item.getItemId() == R.id.grade_calculator) {
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new CalculatorFragment());
+            fragmentTransaction.replace(R.id.container_fragment, new GradeCalculatorFragment());
             fragmentTransaction.commit();
             toolbar.setTitle("Grade Calculator");
         }
-        if(item.getItemId() == R.id.settings) {
+        if(item.getItemId() == R.id.gpa_calculator) {
+            fab.hide();
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new SettingsFragment());
+            fragmentTransaction.replace(R.id.container_fragment, new GPACalculatorFragment());
             fragmentTransaction.commit();
-            toolbar.setTitle("Settings");
+            toolbar.setTitle("GPA Calculator");
         }
         if(item.getItemId() == R.id.logout) {
             FirebaseAuth.getInstance().signOut();

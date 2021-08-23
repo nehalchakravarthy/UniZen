@@ -7,24 +7,19 @@
         android:title="@string/menu_home" />
 
     <item
-        android:id="@+id/profile"
-        android:icon="@drawable/ic_profile"
-        android:title="Profile" />
+        android:id="@+id/bookmarks"
+        android:icon="@drawable/ic_bookmarks"
+        android:title="Bookmarks" />
 
     <item
-        android:id="@+id/timetable"
-        android:icon="@drawable/ic_timetable"
-        android:title="Timetable" />
-
-    <item
-        android:id="@+id/grade_calculator"
-        android:icon="@drawable/ic_calculator"
+        android:id="@+id/grade_calculaor"
+        android:icon="@drawable/ic_calculator_2"
         android:title="Grade Calculator" />
 
     <item
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_settings"
-        android:title="Settings" />
+        android:id="@+id/gpa_calculator"
+        android:icon="@drawable/ic_calculator"
+        android:title="GPA Calculator" />
 
     <item
         android:id="@+id/logout"

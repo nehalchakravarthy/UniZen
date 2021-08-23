@@ -1,21 +1,15 @@
 package com.unizen.app;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,29 +20,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class BookmarksFragment extends Fragment {
 
     /**
-     * Fragment corresponding to Home screen of the app
-     * Displays all available posts in a RecyclerView
+     * Fragment corresponding to Bookmarks item in Navigation Drawer
      **/
 
     RecyclerView postRecyclerView;
-    PostAdapter postAdapter;
+    BookmarkAdapter postAdapter;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     List<Post> postList;
 
-    public HomeFragment() {
-        // Empty constructor
+    public BookmarksFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
-        postRecyclerView  = fragmentView.findViewById(R.id.postRV);
+        View fragmentView = inflater.inflate(R.layout.fragment_bookmarks, container, false);
+        postRecyclerView  = fragmentView.findViewById(R.id.bookmarkRV);
         postRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         postRecyclerView.setHasFixedSize(true);
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -66,9 +57,9 @@ public class HomeFragment extends Fragment {
                 postList = new ArrayList<>();
                 for (DataSnapshot postsnap: dataSnapshot.getChildren()) {
                     Post post = postsnap.getValue(Post.class);
-                    postList.add(post) ;
+                    postList.add(post);
                 }
-                postAdapter = new PostAdapter(getActivity(), postList);
+                postAdapter = new BookmarkAdapter(getActivity(), postList);
                 Collections.reverse(postList);
                 postRecyclerView.setAdapter(postAdapter);
             }

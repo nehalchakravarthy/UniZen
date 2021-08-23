@@ -4,6 +4,10 @@ import com.google.firebase.database.ServerValue;
 
 public class Post {
 
+    /**
+     * Post model to store data in database
+     **/
+
     private String postKey;
     private String title;
     private String description;
@@ -11,9 +15,10 @@ public class Post {
     private String userId;
     private String userPhoto;
     private String userName;
-    private Object timeStamp ;
+    private Object timeStamp;
 
     public Post(String title, String description, String picture, String userId, String userPhoto, String userName) {
+        // Constructor
         this.title = title;
         this.description = description;
         this.picture = picture;
@@ -24,8 +29,10 @@ public class Post {
     }
 
     public Post() {
+        // Empty constructor
     }
 
+    // Getter methods
     public String getPostKey() {
         return postKey;
     }
@@ -58,6 +65,7 @@ public class Post {
         return timeStamp;
     }
 
+    // Setter methods
     public void setPostKey(String postKey) {
         this.postKey = postKey;
     }

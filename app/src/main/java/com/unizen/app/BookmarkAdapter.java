@@ -27,17 +27,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
+public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyViewHolder> {
 
     /**
-     * Acts as a bridge between RecyclerView and Post data
-     * Responsible for making a View for each post in the list of posts
+     * Acts as a bridge between RecyclerView and bookmarked post data
+     * Responsible for making a View for each post in the list of bookmarked posts
      **/
 
     Context mContext;
     List<Post> mData ;
 
-    public PostAdapter(Context mContext, List<Post> mData) {
+    public BookmarkAdapter(Context mContext, List<Post> mData) {
         // Constructor
         this.mContext = mContext;
         this.mData = mData;
@@ -47,7 +47,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflates a new view with post data
-        View row = LayoutInflater.from(mContext).inflate(R.layout.post_card, parent,false);
+        View row = LayoutInflater.from(mContext).inflate(R.layout.bookmark_card, parent,false);
         return new MyViewHolder(row);
     }
 
@@ -71,10 +71,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        // View holder to hold post data
+        // View holder to hold bookmarked post data
         TextView postTitle, userName, postDesc;
         ImageView imgPost, imgPostProfile;
-        CheckBox bookmark;
+        //CheckBox bookmark;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -84,10 +84,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             postDesc = itemView.findViewById(R.id.row_post_desc);
             imgPost = itemView.findViewById(R.id.row_post_img);
             imgPostProfile = itemView.findViewById(R.id.row_user_pic);
-            bookmark = itemView.findViewById(R.id.bookmark);
 
             itemView.setOnClickListener(new View.OnClickListener() {
-                // Open detailed post view
+                // Open detailed view of post
                 @Override
                 public void onClick(View view) {
                     Intent postDetailActivity = new Intent(mContext, PostDetailActivity.class);
@@ -102,29 +101,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
                     long timestamp  = (long) mData.get(position).getTimeStamp();
                     postDetailActivity.putExtra("postDate", timestamp) ;
                     mContext.startActivity(postDetailActivity);
-                }
-            });
-
-            bookmark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                // Handles adding and removing bookmark
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    int position = getAdapterPosition();
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                    String userID = mAuth.getCurrentUser().getUid();
-                    System.out.println(userID);
-                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                    DatabaseReference databaseReference = firebaseDatabase.getReference();
-                    if(isChecked) {
-                        Map<String, Object> updates = new HashMap<String,Object>();
-                        updates.put(mData.get(position).getPostKey(), "true");
-                        databaseReference.child("Users/" + userID + "/bookmarks").updateChildren(updates);
-                    }
-                    else {
-                        Map<String, Object> updates = new HashMap<String,Object>();
-                        updates.put(mData.get(position).getPostKey(), "false");
-                        databaseReference.child("Users/" + userID + "/bookmarks").updateChildren(updates);
-                    }
                 }
             });
         }

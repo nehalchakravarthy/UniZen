@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:layout_editor_absoluteY="81dp"
+    android:layout_marginTop="0dp">
+
+    <LinearLayout
+        android:id="@+id/cie1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="36dp">
+
+        <TextView
+            android:id="@+id/cie1_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CIE - 1"
+            android:textColor="@color/black"
+            android:layout_marginBottom="14dp"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="52dp"
+            tools:layout_editor_absoluteY="42dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/test1"
+                android:background="@drawable/reg_edittext_style"
+                android:layout_marginHorizontal="36dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:gravity="center_horizontal"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="92dp"
+                android:hint="Test 1"/>
+
+            <EditText
+                android:id="@+id/quiz1"
+                android:background="@drawable/reg_edittext_style"
+                android:layout_marginHorizontal="36dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:gravity="center_horizontal"
+                tools:layout_editor_absoluteX="234dp"
+                tools:layout_editor_absoluteY="92dp"
+                android:hint="Quiz 1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cie2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="36dp">
+
+        <TextView
+            android:id="@+id/cie2_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CIE - 2"
+            android:textColor="@color/black"
+            android:layout_marginBottom="14dp"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="52dp"
+            tools:layout_editor_absoluteY="42dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/test2"
+                android:background="@drawable/reg_edittext_style"
+                android:layout_marginHorizontal="36dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:gravity="center_horizontal"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="92dp"
+                android:hint="Test 2"/>
+
+            <EditText
+                android:id="@+id/quiz2"
+                android:background="@drawable/reg_edittext_style"
+                android:layout_marginHorizontal="36dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:gravity="center_horizontal"
+                tools:layout_editor_absoluteX="234dp"
+                tools:layout_editor_absoluteY="92dp"
+                android:hint="Quiz 2"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cie3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="36dp">
+
+        <TextView
+            android:id="@+id/cie3_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CIE - 3"
+            android:textColor="@color/black"
+            android:layout_marginBottom="14dp"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="52dp"
+            tools:layout_editor_absoluteY="42dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/test3"
+                android:background="@drawable/reg_edittext_style"
+                android:layout_marginHorizontal="36dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:gravity="center_horizontal"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="92dp"
+                android:hint="Test 3"/>
+
+            <EditText
+                android:id="@+id/quiz3"
+                android:background="@drawable/reg_edittext_style"
+                android:layout_marginHorizontal="36dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:gravity="center_horizontal"
+                tools:layout_editor_absoluteX="234dp"
+                tools:layout_editor_absoluteY="92dp"
+                android:hint="Quiz 3"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/self_study"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="36dp">
+
+        <TextView
+            android:id="@+id/self_study_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Experiential Learning"
+            android:textColor="@color/black"
+            android:layout_marginBottom="14dp"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="52dp"
+            tools:layout_editor_absoluteY="42dp"
+            android:layout_gravity="center_horizontal"/>
+
+            <EditText
+                android:id="@+id/el_marks"
+                android:background="@drawable/reg_edittext_style"
+                android:layout_marginHorizontal="24dp"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="92dp"
+                android:hint="EL Marks"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="36dp">
+
+        <TextView
+            android:id="@+id/lab_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Laboratory Component"
+            android:textColor="@color/black"
+            android:layout_marginBottom="14dp"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="52dp"
+            tools:layout_editor_absoluteY="42dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <EditText
+            android:id="@+id/lab_marks"
+            android:background="@drawable/reg_edittext_style"
+            android:layout_marginHorizontal="24dp"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            tools:layout_editor_absoluteX="52dp"
+            tools:layout_editor_absoluteY="92dp"
+            android:hint="Lab Marks"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/calc_grade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="40dp"
+        android:background="@drawable/reg_btn_style"
+        android:text="Calculate Grade"
+        android:layout_gravity="center_horizontal"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
